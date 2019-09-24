@@ -1,0 +1,9 @@
+cluster_name: cluster-rke
+nodes:
+- address: master
+  user: vagrant
+  role: [controlplane,worker,etcd]
+- address: slave
+  user: vagrant
+  role: [worker]
+
