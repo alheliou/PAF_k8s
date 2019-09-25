@@ -89,6 +89,14 @@ Installation de Kubernetes avec l'aide de RKE (Rancher Kubernetes Engine)
 
 <https://itnext.io/setup-a-basic-kubernetes-cluster-with-ease-using-rke-a5f3cc44f26f>
 
+TODO le faire aussi avec rancher/rancher
+
+ sudo docker run -d --restart=unless-stopped -p 8080:8080 \
+ -e no_proxy=$no_proxy \
+ -e http_proxy=$http_proxy \
+ -e https_proxy=$https_proxy \
+  rancher/rancher
+
 
 ### Liens utiles trouvés sur le net
 
