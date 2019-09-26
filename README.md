@@ -85,18 +85,57 @@ However, network policies can be defined to prevent a Pod from communicating wit
 
 ## Lancement cluster de deux VMs
 
+### RKE
 Installation de Kubernetes avec l'aide de RKE (Rancher Kubernetes Engine)
+
+Aller dans le dossier **rke**.
 
 <https://itnext.io/setup-a-basic-kubernetes-cluster-with-ease-using-rke-a5f3cc44f26f>
 
-TODO le faire aussi avec rancher/rancher
 
- sudo docker run -d --restart=unless-stopped -p 8080:8080 \
- -e no_proxy=$no_proxy \
- -e http_proxy=$http_proxy \
- -e https_proxy=$https_proxy \
-  rancher/rancher
+### Using rancher UI
 
+On your master node type the following:
+
+>sudo docker run -d --restart=unless-stopped \
+>   -p 8080:80 -p 8443:443 \
+>   rancher/rancher:latest
+
+Then open firefox at <localhost:8080>
+
+The connection it is insecured, click on **Advanced** and **Add exception** and **Confirm**.
+
+Now you should see the welcome page.
+
+![](https://www.linode.com/docs/applications/containers/kubernetes/how-to-deploy-kubernetes-on-linode-with-rancher-2-2/first-load-screen.png)
+
+Then for the rancher URL type "https://192.168.33.20:8443" that is you master IP.
+ 
+Click on "Add cluster" to create you own cluster.
+We are not using any provider so choose **Custom** and choose a **cluster name**, then click on **Next**.
+
+![](https://github.com/alheliou/PAF_k8s/blob/master/rancher/cluster_creation.png?raw=true)
+
+Select etcd, controle plane and worker, copy the command line and paste it on the master terminal
+Unselect etcd and controle pane, copy the command line and paste it on the slave terminal.
+
+![](https://github.com/alheliou/PAF_k8s/blob/master/rancher/cluster_creation_suite.png)
+
+Click on **Done**
+
+Wait a bit and you should see the **Active** State for your cluster.
+
+#### Navigate the UI
+
+On the top left corner click on your cluster-name and select **Global**, then on the top you can see **Apps**
+
+On this page you can load helm charts that come from public repository
+
+![](https://github.com/alheliou/PAF_k8s/blob/master/rancher/catalogs.png?raw=true)
+
+#### Play with it
+
+You can install the kubernetes UI, or the ELK suite and prometheus to monitor the nodes etc ...
 
 ### Liens utiles trouvés sur le net
 
