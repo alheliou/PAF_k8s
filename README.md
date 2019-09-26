@@ -134,22 +134,6 @@ However, network policies can be defined to prevent a Pod from communicating wit
 
 ## Lancement cluster de deux VMs
 
-### RKE
-Installation de Kubernetes avec l'aide de RKE (Rancher Kubernetes Engine)
-
-Aller dans le dossier **rke**.
-
-* launch_rke_k8s.sh : ce script permet de lancer un cluster kubernetes, il se base sur le fichier de configuration **rancher_kubernetes_cluster.yml**. Il créé le fichier **kube_config_rancher_kubernetes_cluster.yml** qui sera ensuite utile pour la commande **kubectl** qui permet de diriger le cluster avec l'API
-
-* remove_rke_k8s.sh : ce script permet de détruire le cluster construit
-
-* launch_rancher.sh <<hostname>> : qui permet de déployer l'UI rancher sur le domaine "hostname"
-	
-* launch_k8s_UI.sh : qui permet de déployer l'UI de kubernetes
-	
-<https://itnext.io/setup-a-basic-kubernetes-cluster-with-ease-using-rke-a5f3cc44f26f>
-
-
 ### Using rancher UI
 
 On your master node type the following:
@@ -194,6 +178,33 @@ On this page you can load helm charts that come from public repository
 
 You can install the kubernetes UI, or the ELK suite and prometheus to monitor the nodes etc ...
 
+
+### RKE
+Installation de Kubernetes avec l'aide de RKE (Rancher Kubernetes Engine)
+
+Aller dans le dossier **rke**.
+
+* launch_rke_k8s.sh : ce script permet de lancer un cluster kubernetes, il se base sur le fichier de configuration **rancher_kubernetes_cluster.yml**. Il créé le fichier **kube_config_rancher_kubernetes_cluster.yml** qui sera ensuite utile pour la commande **kubectl** qui permet de diriger le cluster avec l'API
+
+* remove_rke_k8s.sh : ce script permet de détruire le cluster construit
+
+* launch_rancher.sh << hostname >> : qui permet de déployer l'UI rancher sur le domaine "hostname"
+	
+		./launch_rancher.sh master
+
+the UI will be available at https://master
+	
+* launch_k8s_UI.sh : qui permet de déployer l'UI de kubernetes, ce script ne vous rendra pas la main
+Cependant l'UI kubernetes sera alors accessible 
+<http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/>
+
+Vous pourrez obtenir le token d'identification avec cette commande 
+	
+	export KUBECONFIG=~/Desktop/PAF_k8s/rke/kube_config_rancher_kubernetes_cluster.yml
+	kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+
+<https://itnext.io/setup-a-basic-kubernetes-cluster-with-ease-using-rke-a5f3cc44f26f>
+
 ### Liens utiles trouvés sur le net
 
 - <https://kubernetes.io/fr/docs/tutorials/kubernetes-basics/>
@@ -205,6 +216,8 @@ You can install the kubernetes UI, or the ELK suite and prometheus to monitor th
 - <https://kubernetes.io/docs/setup/best-practices/>
 
 - <https://www.replex.io/blog/kubernetes-in-production-readiness-checklist-and-best-practices-for-resource-management>
+
+
 
 ## Exemples en ligne
 
