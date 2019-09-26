@@ -185,3 +185,6 @@ Vous y trouverez également pas mal de cas pratiques pour Docker et plein d'autr
 ## Questions investiguées lors du DOJO
 
 A remplir
+
+Commandes utiles : 
+* docker rm -f $(docker ps -aq)  #permet de supprimer tous les containers sur un noeud
