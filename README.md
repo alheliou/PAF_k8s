@@ -73,7 +73,56 @@ A service is an abstraction defining a set of pods and a policy to access them. 
 **Volume** <https://kubernetes.io/docs/concepts/storage/volumes/>
 Container’s volumes are ephemeral, if it crashed, kubelet will restart it, but its files will be lost. Kubenetes Volume allows to have a persistence of volumes and also to share volume between containers. Kubernetes volumes have an explicit lifetime, the same as the Pod that encloses it, it outlives any Container that run inside the pod. Kubernetes supports a vast variety of volumes’ types, and a Pod can use any number of them simultaneously.
 
-TODO explain PV and PVC
+
+	Persistent volumes https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+	PVs are resources in the cluster. PVCs are requests for those resources and also act as claim checks to the resource. 
+	The interaction between PVs and PVCs follows this lifecycle:
+
+	**Provisioning**
+	There are two ways PVs may be provisioned: statically or dynamically.
+
+	*Static*
+	A cluster administrator creates a number of PVs. 
+	They carry the details of the real storage which is available for use by cluster users. 
+	They exist in the Kubernetes API and are available for consumption.
+
+	*Dynamic*
+	When none of the static PVs the administrator created matches a user’s PersistentVolumeClaim, the cluster may 
+	try to dynamically provision a volume specially for the PVC. 
+	This provisioning is based on StorageClasses: the PVC must request a storage class and the administrator must 
+	have created and configured that class in order for dynamic provisioning to occur. 
+	Claims that request the class "" effectively disable dynamic provisioning for themselves.
+
+	To enable dynamic storage provisioning based on storage class, the cluster administrator needs to enable the 
+	DefaultStorageClass admission controller on the API server. 
+	This can be done, for example, by ensuring that DefaultStorageClass is among the comma-delimited, ordered list 
+	of values for the --enable-admission-plugins flag of the API server component. For more information on API server
+	command line flags, please check kube-apiserver documentation.
+
+	**Binding**
+	A user creates, or has already created in the case of dynamic provisioning, a PersistentVolumeClaim with a specific 
+	amount of storage requested and with certain access modes. 
+	A control loop in the master watches for new PVCs, finds a matching PV (if possible), and binds them together. 
+	If a PV was dynamically provisioned for a new PVC, the loop will always bind that PV to the PVC. 
+	Otherwise, the user will always get at least what they asked for, but the volume may be in excess of what was requested.
+	Once bound, PersistentVolumeClaim binds are exclusive, regardless of how they were bound. A PVC to PV binding is a 
+	one-to-one mapping.
+
+	Claims will remain unbound indefinitely if a matching volume does not exist. 
+	Claims will be bound as matching volumes become available. 
+	For example, a cluster provisioned with many 50Gi PVs would not match a PVC requesting 100Gi. The PVC can be bound 
+	when a 100Gi PV is added to the cluster.
+
+	**Using**
+	Pods use claims as volumes. 
+	The cluster inspects the claim to find the bound volume and mounts that volume for a pod. 
+	For volumes which support multiple access modes, the user specifies which mode is desired when using their claim 
+	as a volume in a pod.
+
+	Once a user has a claim and that claim is bound, the bound PV belongs to the user for as long as they need it. 
+	Users schedule Pods and access their claimed PVs by including a persistentVolumeClaim in their Pod’s volumes block.
+
+
 
 **Namespace** <https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/>
 Kubernetes starts with three initial namespaces: default, kube-system and kube-public. Names of resources have to be unique within a namespace, but not across namespaces. Namespaces purpose is for environments shared by multiple teams. We did not use thoroughly this component, and limit ourselves to the default namespace.
