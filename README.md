@@ -90,6 +90,14 @@ Installation de Kubernetes avec l'aide de RKE (Rancher Kubernetes Engine)
 
 Aller dans le dossier **rke**.
 
+* launch_rke_k8s.sh : ce script permet de lancer un cluster kubernetes, il se base sur le fichier de configuration **rancher_kubernetes_cluster.yml**. Il créé le fichier **kube_config_rancher_kubernetes_cluster.yml** qui sera ensuite utile pour la commande **kubectl** qui permet de diriger le cluster avec l'API
+
+* remove_rke_k8s.sh : ce script permet de détruire le cluster construit
+
+* launch_rancher.sh <<hostname>> : qui permet de déployer l'UI rancher sur le domaine "hostname"
+	
+* launch_k8s_UI.sh : qui permet de déployer l'UI de kubernetes
+	
 <https://itnext.io/setup-a-basic-kubernetes-cluster-with-ease-using-rke-a5f3cc44f26f>
 
 
@@ -185,3 +193,6 @@ Vous y trouverez également pas mal de cas pratiques pour Docker et plein d'autr
 ## Questions investiguées lors du DOJO
 
 A remplir
+
+Commandes utiles : 
+* docker rm -f $(docker ps -aq)  #permet de supprimer tous les containers sur un noeud
