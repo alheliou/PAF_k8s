@@ -1,23 +1,30 @@
 #!/bin/bash
 # proxy and user conf
-hostname=$1
+if [ $# -eq 0 ]
+then hostname=$1
+else hostname=$HOSTNAME
+fi
+
 export KUBECONFIG=kube_config_rancher_kubernetes_cluster.yml
 
 # add the helm chart repository
 helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
 
 #Installing cert manager
-helm upgrade --install cert-manager stable/cert-manager \
+helm install --name cert-manager stable/cert-manager \
   --namespace kube-system \
+  --set proxy=http://10.31.255.65:8080\
   --version v0.5.2
 
 kubectl -n kube-system rollout status deploy/cert-manager
 
 
 # Using Ranger Generated Certificates
-helm upgrade --install rancher rancher-stable/rancher \
+helm install --name rancher rancher-stable/rancher \
   --namespace cattle-system \
-  --set hostname=$hostname
+  --set hostname=$hostname \
+  --set proxy=http://10.31.255.65:8080
+ 
 
 kubectl -n cattle-system rollout status deploy/rancher
 
