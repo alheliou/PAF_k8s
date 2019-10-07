@@ -138,9 +138,11 @@ However, network policies can be defined to prevent a Pod from communicating wit
 
 On your master node type the following:
 
->sudo docker run -d --restart=unless-stopped \
->   -p 8080:80 -p 8443:443 \
->   rancher/rancher:latest
+	sudo docker run -d --restart=unless-stopped \
+   	-p 8080:80 -p 8443:443 \
+   	-e HTTP_PROXY=$HTTP_PROXY \
+   	-e HTTPS_PROXY=$HTTPS_PROXY \
+   	rancher/rancher:latest
 
 Then open firefox at <localhost:8080>
 
@@ -184,7 +186,7 @@ You can install the kubernetes UI, or the ELK suite and prometheus to monitor th
 
 2) Then one the cluster is delete on each node run:
 
-	docker rm -f $(docker ps -a)
+	docker rm -f $(docker ps -aq)
 
 	sudo rm -rf /etc/ceph \
        /etc/cni \

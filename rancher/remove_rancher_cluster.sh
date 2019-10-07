@@ -1,4 +1,4 @@
-docker rm -f $(docker ps -a)
+docker rm -f $(docker ps -aq)
 
 sudo rm -rf /etc/ceph \
        /etc/cni \
