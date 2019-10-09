@@ -13,7 +13,7 @@ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
 #Installing cert manager
 helm install --name cert-manager stable/cert-manager \
   --namespace kube-system \
-  --set proxy=http://10.31.255.65:8080\
+  --set proxy=$http_proxy\
   --version v0.5.2
 
 kubectl -n kube-system rollout status deploy/cert-manager
@@ -23,7 +23,7 @@ kubectl -n kube-system rollout status deploy/cert-manager
 helm install --name rancher rancher-stable/rancher \
   --namespace cattle-system \
   --set hostname=$hostname \
-  --set proxy=http://10.31.255.65:8080
+  --set proxy=$http_proxy
  
 
 kubectl -n cattle-system rollout status deploy/rancher

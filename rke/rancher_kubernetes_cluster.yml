@@ -1,7 +1,7 @@
 cluster_name: cluster-rke
 network:
-    http_proxy: https://10.31.255.35:8080
-    https_proxy: https://10.31.255.35:8080
+    http_proxy: $http_proxy
+    https_proxy: $http_proxy
     no_proxy: localhost,127.0.0.1,0.0.0.0,192.168.33.10,192.168.33.20,10.0.2.11,10.0.2.12,master,slave
 nodes:
 - address: master
