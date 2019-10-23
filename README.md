@@ -4,7 +4,7 @@
 
 1) [Introduction à Kubernetes](#introduction-à-kubernetes)
 
-2) [Lancement d'un cluster avec Rancher sur deux VMs](#lancement-cluster)
+2) [Lancement d'un cluster avec Rancher sur deux VMs](#Lancement-cluster-de-deux-VMs)
 
 3) Prise en main des UI de Rancher et de Kubernetes
 
@@ -133,6 +133,12 @@ There different level of networking with Kubernetes. First, any Pod can communic
 However, network policies can be defined to prevent a Pod from communicating with another.
 
 ## Lancement cluster de deux VMs
+
+### Les deux VMs doivent avoir des adresses IP réseaux différentes
+
+Avec VirtualBox cela implique de créé un "réseau Nat" et d'activer sur chaque VM une carte réseau "Nat".
+
+![](https://tr3.cbsistatic.com/hub/i/2016/10/11/28c5e468-9c76-403f-ac07-6072f8839d65/vbnata.jpg)
 
 ### Using rancher UI
 
