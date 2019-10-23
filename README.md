@@ -286,7 +286,8 @@ Vous y trouverez également pas mal de cas pratiques pour Docker et plein d'autr
 
 ## Questions investiguées lors du DOJO
 
-A remplir
+Les problèmes rencontrés lors de la session PAF n'étaient sans doute pas liés au proxy mais à la configuration réseau de VirtualBox. Chaque VM doit en effet avoir une IP réseau différente, il faut donc utilisé un réseau NAT.
+Par ailleurs après avoir lancé un cluster avec l'UI il est important de le nettoyer intégralement avant d'en lancer un autre (en ligne de commande ou avec l'UI).
 
 Commandes utiles : 
 * docker rm -f $(docker ps -aq)  #permet de supprimer tous les containers sur un noeud
